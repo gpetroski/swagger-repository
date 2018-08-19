@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}} | Swagger Repository</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" type="image/png" href="./img/swagger.png">
+      <link rel='stylesheet' href='/css/client.css' />
+      <link rel='stylesheet' href='/css/vendor.css' />
+
+      <!-- Le styles -->
+      <!--<link href="./lib/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+      <!--<link href="./css/main.css" rel="stylesheet">-->
+      <!--<link rel='stylesheet' href='/stylesheets/style.css' />-->
+      <!--<script src="./lib/jquery-1.11.3.min.js"></script>-->
+      <!--<script src="./lib/jquery-cookie.js"></script>-->
+      <!--<script src="./lib/bootstrap/js/bootstrap.min.js"></script>-->
+      <!--<script src="./lib/knockout-3.3.0.js"></script>-->
+  </head>
+  <body class="bg-light">
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="navbar">
+        <div class="mr-5"></div>
+            <a class="navbar-brand" href="/">
+                <img width="30px" height="30px" src="/images/swagger-green.png"/> Repository
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/dashboards">Dashboards <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/apis">APIs</a>
+                  </li>
+              </ul>
+              <form class="form-inline mt-2 mt-md-0">
+                  <input class="form-control mr-sm-2" type="text" placeholder="Search APIs" id="navbarSearchForm" aria-label="Search">
+              </form>
+            </div>
+        <div class="ml-5"></div>
+    </nav>
+    {{#if breadcrumbs}}
+    <div class="fixed-top mb-1 bg-white pt-2" id="subnav">
+        <ul class="nav nav-tabs pl-5">
+            <li class="nav-item">
+                <span id="serviceTitle">Swagger Petstore</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link bg-light active" href="#">prod</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">r3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">r9</a>
+            </li>
+        </ul>
+    </div>
+    {{/if}}
+    <div class="container {{contentClass}}">
+        <div class="row">
+          <div class="col">
+              {{{body}}}
+          </div>
+        </div>
+    </div>
+    <script src="/js/vendor.bundle.js"></script>
+    <script src="/js/client.bundle.js"></script>
+  </body>
+</html>

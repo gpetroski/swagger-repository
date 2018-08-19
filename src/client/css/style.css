@@ -1,0 +1,31 @@
+html {
+    overflow-y: scroll;
+}
+
+#navbarSearchForm {
+    width:430px !important;
+}
+
+body .navbar-dark .navbar-brand {
+    color: #5BC33F;
+}
+
+#navbar {
+    height: 58px;
+}
+
+#subnav {
+    margin-top: 58px;
+}
+
+body .content-nav {
+    margin-top: 80px;
+}
+body .content-subnav {
+    margin-top: 120px;
+}
+
+#serviceTitle {
+    display: block;
+    padding: .5rem 1rem;
+}
