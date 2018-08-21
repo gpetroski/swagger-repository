@@ -7,9 +7,8 @@ import 'swagger-ui/dist/swagger-ui.css';
 import '../css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../images/swagger-green.png';
-import '../images/swagger.png';
 
 SwaggerUI({
-    url: "https://petstore.swagger.io/v2/swagger.json",
+    url: "http://localhost:3000/proxy/v1/specification?url=https://petstore.swagger.io/v2/swagger.yaml",
     dom_id: '#swagger-ui'
 });
