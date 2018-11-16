@@ -12,23 +12,28 @@ const proxyRequest = (req) => {
             reject("No url provided");
         }
 
+        if (req.headers['host']) {
+            delete req.headers['host'];
+        }
+
         var parsedUrl = url.parse(requestUrl);
+
         const options = {
+            protocol: parsedUrl.protocol,
             hostname: parsedUrl.hostname,
-            port: parsedUrl.port,
+            port: parsedUrl.protocol === 'http:' ? 80 : 443,
             path: parsedUrl.path,
-            method: req.method,
+            query: parsedUrl.query,
             headers: req.headers,
-            hash: parsedUrl.hash
+            method: req.method,
+            hash: parsedUrl.hash ? parsedUrl.hash : ""
         };
 
-        console.log(options.headers);
-
-        if (parsedUrl.protocol.indexOf('https') >= 0) {
+        if (parsedUrl.protocol === 'https:') {
             client = https;
         }
 
-        client.request(options, (resp) => {
+        const proxyReq = client.request(options, (resp) => {
             let data = '';
 
             // A chunk of data has been recieved.
@@ -38,9 +43,6 @@ const proxyRequest = (req) => {
 
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
-                console.log(resp.statusCode);
-                console.log(resp.headers);
-                console.log(data);
                 resolve({
                     statusCode: resp.statusCode,
                     headers: resp.headers,
@@ -49,9 +51,14 @@ const proxyRequest = (req) => {
             });
 
         }).on("error", (err) => {
+            console.log("error", err);
             reject(err);
         });
 
+        if (req.body && Object.keys(req.body).length > 0) {
+            proxyReq.write(req.body);
+        }
+        proxyReq.end();
     });
 };
 

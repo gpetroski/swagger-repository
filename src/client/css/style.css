@@ -29,3 +29,15 @@ body .content-subnav {
     display: block;
     padding: .5rem 1rem;
 }
+
+td.col.response-col_status {
+    width: 10%;
+}
+
+td.col.parameters-col_name {
+    width: 20%;
+}
+
+th.col.col_header.parameters-col_name {
+    width: 20%;
+}

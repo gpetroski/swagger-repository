@@ -1,4 +1,30 @@
-<div class="mr-lg-5 ml-lg-5">
-    <div id="swagger-ui">
+<div class="fixed-top mb-1 bg-white pt-2" id="subnav">
+    <ul class="nav nav-tabs pl-5">
+        <li class="nav-item">
+            <span id="serviceTitle">{{serviceName}}</span>
+        </li>
+        {{#each serviceEnvironments}}
+        <li class="nav-item">
+            {{#if this.active}}
+            <a class="nav-link bg-light active" href="/apis/{{this.serviceId}}/{{this.name}}">{{this.name}}</a>
+            {{else}}
+            <a class="nav-link" href="/apis/{{this.serviceId}}/{{this.name}}">{{this.name}}</a>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
+</div>
+<div class="container content-subnav">
+    <div class="row">
+        <div class="col">
+        <div class="mr-lg-5 ml-lg-5">
+            <div id="swagger-ui">
+            </div>
+        </div>
+        </div>
     </div>
 </div>
+<script>
+    var serviceSpecUrl = '{{{serviceSpecUrl}}}';
+    var swaggerContainer = "#swagger-ui";
+</script>

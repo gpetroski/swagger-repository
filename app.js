@@ -9,7 +9,9 @@ var indexRouter = require('./src/server/routes/index');
 var app = express();
 
 // view engine setup
+var hbs = require('hbs');
 app.set('views', path.join(__dirname, './src/server/views'));
+hbs.registerPartials(path.join(__dirname, './src/server/views/partials'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
