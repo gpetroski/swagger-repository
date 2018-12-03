@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 const proxy = require('./proxy');
 const api = require('./api');
-const { renderSwaggerUi } = require('../middleware/ui/apis');
+const { renderApisList, renderApisDetails } = require('../middleware/ui/apis');
+const { buildNavigation } = require('../middleware/navigation/navigation');
+
+router.use(buildNavigation);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,16 +27,8 @@ router.get('/dashboards', function(req, res, next) {
   });
 });
 
-router.get('/apis', function(req, res, next) {
-  res.render('apis', {
-    title: 'Swagger APIs',
-    serviceName: 'Matching User Service',
-    serviceSpecUrl: '/proxy/v1/specification?url=' + encodeURIComponent('http://r3-singles-user-service.np.vip.dc1.eharmony.com/user-service/swagger.json')
-  });
-});
-
-router.get('/apis/:serviceId', renderSwaggerUi);
-router.get('/apis/:serviceId/:environment', renderSwaggerUi);
-
+router.get('/apis', renderApisList);
+router.get('/apis/:serviceId', renderApisDetails);
+router.get('/apis/:serviceId/:environment', renderApisDetails);
 
 module.exports = router;

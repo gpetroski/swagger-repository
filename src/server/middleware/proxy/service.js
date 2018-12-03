@@ -7,7 +7,7 @@ const serviceProxy = (req, res, next) => {
         res.end();
     }, (error) => {
         console.log(error);
-        res.error(error);
+        res.render('apis-error');
     })
 };
 

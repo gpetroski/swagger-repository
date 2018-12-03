@@ -7,11 +7,12 @@ html {
 }
 
 body .navbar-dark .navbar-brand {
-    color: #5BC33F;
+    color: rgb(240, 255, 236);
 }
 
 #navbar {
     height: 58px;
+    background-color: #419827;
 }
 
 #subnav {

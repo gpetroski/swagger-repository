@@ -2,7 +2,7 @@ const documentationService = require('../../service/documentationService');
 const _ = require('underscore');
 const proxyPath = '/proxy/v1/specification?url=';
 
-const renderSwaggerUi = (req, res, next) => {
+const renderApisDetails = (req, res, next) => {
     var serviceId = req.params.serviceId;
     var documentation = documentationService.getDocumentationByServiceId(serviceId);
     if (documentation.serviceName) {
@@ -21,7 +21,7 @@ const renderSwaggerUi = (req, res, next) => {
             }
         });
         
-        res.render('apis', {
+        res.render('apis-details', {
             title: documentation.serviceName + ' | Swagger APIs',
             serviceId: serviceId,
             serviceName: documentation.serviceName,
@@ -33,6 +33,43 @@ const renderSwaggerUi = (req, res, next) => {
     }
 };
 
+const renderApisList = (req, res, next) => {
+    var categoryFilter = req.query.category;
+    var nameFilter = req.query.name;
+    var allDocumentation = documentationService.getAllDocumentation();
+    var servicesDocumentation = [];
+    _.forEach(allDocumentation, function(serviceDocumentation, serviceId) {
+        var add = true;
+        if (categoryFilter) {
+            if (serviceDocumentation.category.toLowerCase().trim() !== categoryFilter.toLowerCase().trim()) {
+                add = false;
+            }
+        }
+        if (nameFilter) {
+            if (serviceDocumentation.serviceName.toLowerCase().trim().indexOf(nameFilter.toLowerCase().trim()) < 0) {
+                add = false;
+            } 
+        }
+        if (add) {
+            servicesDocumentation.push(serviceDocumentation);
+        }
+    });
+
+    servicesDocumentation.sort(function(a, b){
+        if(a.serviceName < b.serviceName) { return -1; }
+        if(a.serviceName > b.serviceName) { return 1; }
+        return 0;
+    });
+    res.render('apis-list', {
+        title: 'Swagger APIs',
+        servicesDocumentation: servicesDocumentation,
+        categoryFilter: categoryFilter,
+        nameFilter: nameFilter,
+        reset: nameFilter || categoryFilter
+    });
+}
+
 module.exports = {
-    renderSwaggerUi
+    renderApisDetails,
+    renderApisList
 };
