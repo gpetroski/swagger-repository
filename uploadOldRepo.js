@@ -5,6 +5,7 @@ const options = {
     hostname: 'localhost',
     port: 3000,
     path: '/api/1.0/documentation',
+    headers: {"Content-Type": "application/json"},
     method: 'POST'
 };
 

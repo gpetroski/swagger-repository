@@ -1,2 +1,46 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+
+<div class="container content-subnav">
+    <div class="jumbotron">
+        <h4 class="display-4">Swagger Repository</h4>
+        <p>This tool lists all swagger enabled services that have published their swagger specifications to this repository.</p>
+    </div>
+    <div class="my-3 p-3 bg-light rounded shadow-sm">
+        <div class="d-flex justify-content-between align-items-center w-100 border-bottom border-gray">
+            <h4 class="pb-2 mb-0">Recently Viewed Swagger APIs</h4>
+        </div>
+        {{#each servicesDocumentation}}
+        <div class="media text-muted pt-3">
+            {{#if @last}}
+            <div class="media-body pb-3 mb-0 med lh-125">
+            {{else}}
+            <div class="media-body pb-3 mb-0 med lh-125 border-bottom border-gray">
+            {{/if}}
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div>
+                        <h5><a class='text-dark' href="/apis/{{id}}">{{serviceName}}</a></h5>
+                        <strong class="text-gray-dark">Category: </strong><a href="/apis?category={{category}}">{{category}}</a>
+                    </div>
+                    <div>
+                        <table>
+                            <th class="text-right">Environments</th>
+                            <tr>
+                                <td>
+                                    {{#each this.environments}}
+                                    <a href="/apis/{{../id}}/{{environment}}">{{environment}}</a> {{#if @last}} {{else}} | {{/if}}
+                                    {{/each}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <span class="d-block">{{serviceDescription}}</span>
+            </div>
+        </div>
+        {{else}}
+        <div class="media text-muted pt-3">
+            <span>No Recent Swagger APIs found. </span>
+        </div>
+        {{/each}}
+        <div class="border-top border-gray text-right pt-3"><span>Browse more <a href="/apis">APIs</a> now.</span></div>
+    </div>
+</div>

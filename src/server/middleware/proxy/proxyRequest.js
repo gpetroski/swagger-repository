@@ -34,19 +34,17 @@ const proxyRequest = (req) => {
         }
 
         const proxyReq = client.request(options, (resp) => {
-            let data = '';
+            let data = [];
 
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
+            resp.on('data', function(chunk) {
+                data.push(chunk);
             });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
+            resp.on('end', function() {
+                var binaryData = Buffer.concat(data);
                 resolve({
                     statusCode: resp.statusCode,
                     headers: resp.headers,
-                    body: data
+                    body: binaryData
                 });
             });
 
@@ -61,5 +59,26 @@ const proxyRequest = (req) => {
         proxyReq.end();
     });
 };
+
+function gunzipResponse(response, resolve){
+    var gunzip = zlib.createGunzip();
+    var unzippedData = '';
+    var headers = Object.assign({}, response.headers);
+    delete headers['content-encoding'];
+
+    gunzip.on('data', function(data){
+        unzippedData += data.toString();
+    });
+
+    gunzip.on('end', function(){
+        resolve({
+            statusCode: response.statusCode,
+            headers: headers,
+            body: unzippedData
+        });
+    });
+
+    response.pipe(gunzip);
+}
 
 module.exports = proxyRequest;
